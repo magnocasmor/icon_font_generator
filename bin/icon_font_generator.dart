@@ -76,8 +76,7 @@ class GenerateCommand extends Command {
 
   @override
   Future<void> run() async {
-    final nodeCheckResult =
-        await Process.run('node', ['--version'], runInShell: true);
+    final nodeCheckResult = await Process.run('node', ['--version'], runInShell: true);
     if (nodeCheckResult.exitCode != 0) {
       print('Please install Node.JS. Recommended v10+');
     }
@@ -98,10 +97,8 @@ class GenerateCommand extends Command {
       await npmPackage.writeAsString(npmPackageTemplate);
     }
 
-    final tempSourceDirectory =
-        Directory.fromUri(genRootDir.uri.resolve('temp_icons'));
-    final tempOutDirectory =
-        Directory.fromUri(genRootDir.uri.resolve('temp_font'));
+    final tempSourceDirectory = Directory.fromUri(genRootDir.uri.resolve('temp_icons'));
+    final tempOutDirectory = Directory.fromUri(genRootDir.uri.resolve('temp_font'));
     final iconsMap = File.fromUri(genRootDir.uri.resolve('map.json'));
     if (tempSourceDirectory.existsSync()) {
       await tempSourceDirectory.delete(recursive: true);
@@ -124,15 +121,15 @@ class GenerateCommand extends Command {
     // icon-font-generator reguires package: `ttf2woff2`
     // we do not need him and requires a python
     final String gypErr = 'gyp ERR!';
-    await stderr.addStream(nodeInstallDependencies.stderr
-        .where((bytes) => !utf8.decode(bytes).contains(gypErr)));
+    await stderr.addStream(
+        nodeInstallDependencies.stderr.where((bytes) => !utf8.decode(bytes).contains(gypErr)));
 
-    final sourceIconsDirectory = Directory.fromUri(Directory.current.uri
-        .resolve(argResults['from'].replaceAll('\\', '/')));
-    final outIconsFile = File.fromUri(Directory.current.uri
-        .resolve(argResults['out-font'].replaceAll('\\', '/')));
-    final outFlutterClassFile = File.fromUri(Directory.current.uri
-        .resolve(argResults['out-flutter'].replaceAll('\\', '/')));
+    final sourceIconsDirectory =
+        Directory.fromUri(Directory.current.uri.resolve(argResults['from'].replaceAll('\\', '/')));
+    final outIconsFile =
+        File.fromUri(Directory.current.uri.resolve(argResults['out-font'].replaceAll('\\', '/')));
+    final outFlutterClassFile = File.fromUri(
+        Directory.current.uri.resolve(argResults['out-flutter'].replaceAll('\\', '/')));
 
     await tempSourceDirectory.create();
     await tempOutDirectory.create();
@@ -185,17 +182,17 @@ class GenerateCommand extends Command {
       return utf8.encode(message);
     }));
     final String stdlib = 'Invalid member of stdlib';
-    await stderr.addStream(generateFont.stderr
-        .where((bytes) => !utf8.decode(bytes).contains(stdlib)));
+    await stderr
+        .addStream(generateFont.stderr.where((bytes) => !utf8.decode(bytes).contains(stdlib)));
+
+    if (!outIconsFile.existsSync()) {
+      await outIconsFile.create(recursive: true);
+    }
 
     await File(path.join(
       tempOutDirectory.path,
       path.basename(argResults['out-font']),
     )).copy(outIconsFile.path);
-
-    if (!outIconsFile.existsSync()) {
-      await outIconsFile.create(recursive: true);
-    }
 
     final generateClassResult = await generateFlutterClass(
       iconMap: iconsMap,
@@ -203,6 +200,10 @@ class GenerateCommand extends Command {
       packageName: argResults['package'],
       indent: argResults['indent'],
     );
+
+    if (!outFlutterClassFile.existsSync()) {
+      await outFlutterClassFile.create(recursive: true);
+    }
 
     await outFlutterClassFile.writeAsString(generateClassResult.content);
     print('Successful generated '
