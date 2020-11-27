@@ -1,14 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-import 'package:flutter/widgets.dart' show immutable, IconData;
+import 'package:flutter/widgets.dart';
+
+@immutable
+class _UiIconsData extends IconData {
+  const _UiIconsData(int codePoint)
+      : super(
+          codePoint,
+          fontFamily: 'UiIcons',
+          fontPackage: 'nids',
+        );
+}
 
 @immutable
 class UiIcons {
-  static const _fontFamily = "UiIcons";
+  UiIcons._();
 
   
-  static const IconData account = IconData(0xe000, fontFamily: _fontFamily);
-  static const IconData arrow_left = IconData(0xe001, fontFamily: _fontFamily);
-  static const IconData arrow_right = IconData(0xe002, fontFamily: _fontFamily);
-  static const IconData collection = IconData(0xe003, fontFamily: _fontFamily);
+  static const IconData account = _UiIconsData(0xe000);
+  static const IconData arrow_left = _UiIconsData(0xe001);
+  static const IconData arrow_right = _UiIconsData(0xe002);
+  static const IconData collection = _UiIconsData(0xe003);
 }
