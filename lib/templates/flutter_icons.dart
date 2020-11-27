@@ -1,20 +1,11 @@
 const String base = '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-import 'package:flutter/widgets.dart';
-
-@immutable
-class _%CLASS_NAME%Data extends IconData {
-%INDENT%const _%CLASS_NAME%Data(int codePoint)
-%INDENT%%INDENT%%INDENT%: super(
-%INDENT%%INDENT%%INDENT%%INDENT%%INDENT%codePoint,
-%INDENT%%INDENT%%INDENT%%INDENT%%INDENT%fontFamily: '%CLASS_NAME%',%PACKAGE%
-%INDENT%%INDENT%%INDENT%%INDENT%);
-}
+import 'package:flutter/widgets.dart' show immutable, IconData;
 
 @immutable
 class %CLASS_NAME% {
-%INDENT%%CLASS_NAME%._();
+%INDENT%static const _fontFamily = "%CLASS_NAME%";
 
 %INDENT%
 %CONTENT%
@@ -22,7 +13,7 @@ class %CLASS_NAME% {
 ''';
 
 const String icon = '%INDENT%static const IconData %ICON_NAME% = '
-    '_%CLASS_NAME%Data(0x%ICON_CODE%);';
+    'IconData(0x%ICON_CODE%, fontFamily: _fontFamily);';
 
 const String package = '\n%INDENT%%INDENT%%INDENT%%INDENT%'
     '%INDENT%fontPackage: \'%PACKAGE_NAME%\',';
